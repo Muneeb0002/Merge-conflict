@@ -4,33 +4,24 @@ import "./TaskForm.css";
 
 function TaskForm({ onAddTask }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const trimmedTitle = title.trim();
-
-    if (!trimmedTitle) {
-      alert("Task title is required.");
-      return;
-    }
-
-    if (trimmedTitle.length < 5) {
-      alert("Task title must be at least 5 characters long.");
-      return;
-    }
-
-    if (trimmedTitle.length > 50) {
-      alert("Task title cannot exceed 50 characters.");
+    if (!title.trim()) {
+      alert("Please enter a task title.");
       return;
     }
 
     onAddTask({
       id: Date.now(),
-      title: trimmedTitle,
+      title: title.trim(),
+      description: description.trim(),
     });
 
     setTitle("");
+    setDescription("");
   }
 
   return (
@@ -44,8 +35,15 @@ function TaskForm({ onAddTask }) {
         placeholder="Enter task title"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
-        minLength={5}
-        maxLength={50}
+      />
+
+      <label htmlFor="description">Task Description</label>
+      <textarea
+        id="description"
+        placeholder="Describe your task"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+        rows={4}
       />
 
       <button type="submit">Add Task</button>
