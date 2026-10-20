@@ -4,21 +4,24 @@ import "./TaskForm.css";
 
 function TaskForm({ onAddTask }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
     if (!title.trim()) {
-      alert("Please enter a task title");
+      alert("Please enter a task title.");
       return;
     }
 
     onAddTask({
       id: Date.now(),
       title: title.trim(),
+      description: description.trim(),
     });
 
     setTitle("");
+    setDescription("");
   }
 
   return (
@@ -31,7 +34,16 @@ function TaskForm({ onAddTask }) {
         type="text"
         placeholder="Enter task title"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(event) => setTitle(event.target.value)}
+      />
+
+      <label htmlFor="description">Task Description</label>
+      <textarea
+        id="description"
+        placeholder="Describe your task"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+        rows={4}
       />
 
       <button type="submit">Add Task</button>
